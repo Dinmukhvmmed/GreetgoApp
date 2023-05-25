@@ -10,18 +10,18 @@
         <result column="name" property="name" />
         <result column="surname" property="surname" />
         <result column="age" property="age" />
-        <result column="grade" property="averageGrade" />
+        <result column="average_grade" property="averageGrade" />
     </resultMap>
 
     <select id="findAllStudents" resultMap="StudentResultMap">
         SELECT * FROM student
     </select>
 
-    <insert id="addStudent" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO student(name, surname, age, grade) VALUES(#{name}, #{surname}, #{age}, #{averageGrade}
+    <insert id="addStudent" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO student(name, surname, age, average_grade) VALUES(#{name}, #{surname}, #{age}, #{averageGrade})
     </insert>
 
     <delete id="deleteStudent">
-        DELETE FROM student WHERE id = {#id}
+        DELETE FROM student WHERE id = #{id}
     </delete>
 </mapper>

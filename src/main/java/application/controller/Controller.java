@@ -21,21 +21,13 @@ public class Controller {
     }
 
     @PostMapping("/")
-    public ResponseEntity addStudent(@RequestParam(name = "name") String name,
-                                      @RequestParam(name = "surname") String surname,
-                                      @RequestParam(name = "age") int age,
-                                      @RequestParam(name = "average grade") double averageGrade) {
-        Student student = new Student();
-        student.setName(name);
-        student.setSurname(surname);
-        student.setAge(age);
-        student.setAverageGrade(averageGrade);
+    public ResponseEntity addStudent(Student student) {
         studentMapper.addStudent(student);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @DeleteMapping("/")
-    public ResponseEntity deleteStudent(@RequestParam(name = "id") int id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteStudent(@PathVariable int id) {
         studentMapper.deleteStudent(id);
         return new ResponseEntity(HttpStatus.OK);
     }

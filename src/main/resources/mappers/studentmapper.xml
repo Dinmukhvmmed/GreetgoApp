@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="application.mapper.StudentMapper">
+
+    <resultMap id="StudentResultMap" type="application.model.Student">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="surname" property="surname" />
+        <result column="age" property="age" />
+        <result column="grade" property="averageGrade" />
+    </resultMap>
+
+    <select id="findAllStudents" resultMap="UserResultMap">
+        SELECT * FROM student
+    </select>
+
+    <insert id="addStudent" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student(name, surname, age, grade) VALUES(#{name}, #{surname}, #{age}, #{averageGrade}"
+    </insert>
+
+    <delete id="deleteStudent">
+        DELETE FROM student WHERE id = {#id}
+    </delete>
+</mapper>

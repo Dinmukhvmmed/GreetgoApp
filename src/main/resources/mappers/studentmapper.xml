@@ -13,12 +13,12 @@
         <result column="grade" property="averageGrade" />
     </resultMap>
 
-    <select id="findAllStudents" resultMap="UserResultMap">
+    <select id="findAllStudents" resultMap="StudentResultMap">
         SELECT * FROM student
     </select>
 
     <insert id="addStudent" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO student(name, surname, age, grade) VALUES(#{name}, #{surname}, #{age}, #{averageGrade}"
+        INSERT INTO student(name, surname, age, grade) VALUES(#{name}, #{surname}, #{age}, #{averageGrade}
     </insert>
 
     <delete id="deleteStudent">

@@ -17,6 +17,10 @@
         SELECT * FROM student
     </select>
 
+    <select id="findStudent" resultMap="StudentResultMap">
+        SELECT * FROM student WHERE id = #{id}
+    </select>
+
     <insert id="addStudent" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO student(name, surname, age, average_grade) VALUES(#{name}, #{surname}, #{age}, #{averageGrade})
     </insert>

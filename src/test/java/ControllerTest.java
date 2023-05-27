@@ -62,4 +62,16 @@ public class ControllerTest extends AbstractTestNGSpringContextTests {
                 .andExpect(jsonPath("$[1].surname").value(students.get(1).getSurname()))
                 .andExpect(jsonPath("$[1].age").value(students.get(1).getAge()));
     }
+
+    @Test
+    public void testGetStudent() throws Exception {
+        Mockito.when(studentMapper.findStudent(1)).thenReturn(students.get(0));
+
+        mockMvc.perform(get("/").with(user("user").password("123456")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].name").value(students.get(0).getName()))
+                .andExpect(jsonPath("$[0].surname").value(students.get(0).getSurname()))
+                .andExpect(jsonPath("$[0].age").value(students.get(0).getAge()));
+    }
 }

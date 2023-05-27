@@ -10,4 +10,5 @@ public interface StudentMapper {
     void addStudent(Student student);
     void deleteStudent(Integer id);
     List<Student> findAllStudents();
+    Student findStudent(Integer id);
 }

@@ -20,6 +20,12 @@ public class Controller {
         return new ResponseEntity(students, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getStudent(@PathVariable int id) {
+        Student student = studentMapper.findStudent(id);
+        return new ResponseEntity(student, HttpStatus.OK);
+    }
+
     @PostMapping("/")
     public ResponseEntity addStudent(Student student) {
         studentMapper.addStudent(student);

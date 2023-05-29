@@ -10,31 +10,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class Controller {
     @Autowired
     private StudentMapper studentMapper;
 
     @GetMapping("/")
-    public ResponseEntity getAllStudents() {
+    public ResponseEntity<List<Student>> getAllStudents() {
         List<Student> students = studentMapper.findAllStudents();
-        return new ResponseEntity(students, HttpStatus.OK);
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getStudent(@PathVariable int id) {
+    public ResponseEntity<Student> getStudent(@PathVariable int id) {
         Student student = studentMapper.findStudent(id);
-        return new ResponseEntity(student, HttpStatus.OK);
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity addStudent(Student student) {
+    public ResponseEntity<HttpStatus> addStudent(@RequestBody Student student) {
         studentMapper.addStudent(student);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteStudent(@PathVariable int id) {
+    public ResponseEntity<HttpStatus> deleteStudent(@PathVariable int id) {
         studentMapper.deleteStudent(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

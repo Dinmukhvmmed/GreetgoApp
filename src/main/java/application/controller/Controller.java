@@ -5,6 +5,10 @@ import application.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +18,20 @@ import java.util.List;
 public class Controller {
     @Autowired
     private StudentMapper studentMapper;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody String username, @RequestBody String password) {
+        try {
+            Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+            Authentication authenticated = authenticationManager.authenticate(authentication);
+            return ResponseEntity.ok("Authenticated");
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
 
     @GetMapping("/")
     public ResponseEntity<List<Student>> getAllStudents() {

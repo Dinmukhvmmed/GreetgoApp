@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.mapper.StudentMapper;
+import application.model.LoginRequest;
 import application.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,20 +24,17 @@ public class Controller {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody String username, @RequestBody String password) {
+    public ResponseEntity login(@RequestBody LoginRequest loginRequest) {
         try {
+            String username = loginRequest.getUsername();
+            String password = loginRequest.getPassword();
+
             Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
             Authentication authenticated = authenticationManager.authenticate(authentication);
-            return ResponseEntity.ok("Authenticated");
+            return new ResponseEntity(authenticated, HttpStatus.OK);
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<List<Student>> getAllStudents() {
-        List<Student> students = studentMapper.findAllStudents();
-        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -46,9 +44,9 @@ public class Controller {
     }
 
     @PostMapping("/")
-    public ResponseEntity<HttpStatus> addStudent(@RequestBody Student student) {
+    public ResponseEntity addStudent(@RequestBody Student student) {
         studentMapper.addStudent(student);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
